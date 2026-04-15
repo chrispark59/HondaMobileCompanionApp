@@ -1,0 +1,74 @@
+# HondaAVPLite - XcodeGen project specification
+# Run `xcodegen generate` to create the Xcode project
+# Install XcodeGen: brew install xcodegen
+
+name: HondaAVPLite
+options:
+  bundleIdPrefix: com.honda.avplite
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.9"
+
+packages:
+  Supabase:
+    url: https://github.com/supabase-community/supabase-swift
+    from: "2.0.0"
+
+targets:
+  HondaAVPLite:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: .
+        excludes:
+          - "**/*.md"
+          - "project.yml"
+          - "*.xcodeproj/**"
+    settings:
+      base:
+        INFOPLIST_FILE: Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.honda.avplite.viewer
+        TARGETED_DEVICE_FAMILY: "1,2"
+    dependencies:
+      - package: Supabase
+        product: Supabase
+    entitlements:
+      path: HondaAVPLite.entitlements
+    info:
+      path: Info.plist
+      properties:
+        UILaunchScreen:
+          UIColorName: ""
+        NSCameraUsageDescription: "Camera access is required to display AR annotations."
+        UIRequiredDeviceCapabilities:
+          - armv7
+          - arkit
+        CFBundleName: "AVP Lite"
+        CFBundleDisplayName: "Honda AVP Lite"
+
+schemes:
+  HondaAVPLite:
+    build:
+      targets:
+        HondaAVPLite: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

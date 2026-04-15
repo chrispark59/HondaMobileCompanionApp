@@ -1,0 +1,175 @@
+
+================================================================================
+                         HONDA AVP LITE - PROGRESS TRACKER
+================================================================================
+
+Last Updated: 2026-04-15
+Overall Progress: [██████████████████░░] 90%
+
+================================================================================
+                              VISUAL PIPELINE STATUS
+================================================================================
+
+    ┌─────────────┐      ┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+    │  Supabase   │ ───► │   Service   │ ───► │  ViewModel  │ ───► │   ARView    │
+    │   Schema    │      │   Fetch     │      │   Render    │      │  Display    │
+    └─────────────┘      └─────────────┘      └─────────────┘      └─────────────┘
+          [x]                  [x]                  [x]                  [x]
+         READY                READY               READY               READY
+
+================================================================================
+                              USER STORY PROGRESS
+================================================================================
+
+Phase 1: Foundation
+───────────────────────────────────────────────────────────────────────────────
+US-001 │ Supabase project & schema        │ [x] COMPLETE     │ ██████████
+US-002 │ Swift Annotation model           │ [x] COMPLETE     │ ██████████
+US-003 │ Supabase fetch service           │ [x] COMPLETE     │ ██████████
+
+Phase 2: AR Setup
+───────────────────────────────────────────────────────────────────────────────
+US-004 │ Seed script for test data        │ [x] COMPLETE     │ ██████████
+US-005 │ Minimal AR view with ARKit       │ [x] COMPLETE     │ ██████████
+
+Phase 3: Rendering
+───────────────────────────────────────────────────────────────────────────────
+US-006 │ Render spheres at positions      │ [x] COMPLETE     │ ██████████
+US-007 │ Display text labels              │ [x] COMPLETE     │ ██████████
+
+Phase 4: Polish
+───────────────────────────────────────────────────────────────────────────────
+US-008 │ Manual refresh button            │ [x] COMPLETE     │ ██████████
+US-009 │ Simple app entry point           │ [x] COMPLETE     │ ██████████
+
+Phase 5: Validation
+───────────────────────────────────────────────────────────────────────────────
+US-010 │ Refresh with new annotation      │ [ ] NOT STARTED  │ ░░░░░░░░░░
+
+================================================================================
+                              COMPLETION SUMMARY
+================================================================================
+
+    Stories Completed:  9 / 10
+
+    ┌────────────────────────────────────────────────────────────────────────┐
+    │                                                                        │
+    │  ████████████████████████████████████████████████████████████░░░░░░  │
+    │                              90%                                       │
+    │                                                                        │
+    └────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                              BLOCKERS & NOTES
+================================================================================
+
+Current Blockers:
+  (none)
+
+Notes:
+  - Xcode project created with XcodeGen
+  - Supabase project configured with annotations table
+  - Need to add supabase-swift package dependency in Xcode
+
+================================================================================
+                              CHANGE LOG
+================================================================================
+
+[DATE] - [CHANGE]
+──────────────────
+2026-04-15 - BACKEND CHANGE: Switched from CloudKit to Supabase
+             Reason: CloudKit requires paid Apple Developer Program ($99/year)
+             Using free Personal Team account instead
+             Supabase FREE tier: 500MB database, 50k monthly active users
+
+2026-04-15 - Cleaned up project structure:
+             - Deleted HondaAVP/ folder (old full app)
+             - Deleted CloudKitConfig.swift and CloudKitService.swift
+             - Deleted root Package.swift and project.yml
+             - Updated Supabase/schema.sql to simplified Lite version
+
+2026-04-15 - US-001 COMPLETE: Supabase project & schema
+             - Created annotations table with id, position_x/y/z, text_label, created_at
+             - Enabled RLS with public read/insert/delete policies
+             - Added index on created_at for efficient fetching
+             - Created SupabaseConfig.swift with URL and anon key
+
+2026-04-15 - US-002 COMPLETE: Swift Annotation model
+             - Rewrote as Codable struct (removed SwiftData @Model)
+             - Added CodingKeys for snake_case to camelCase mapping
+             - Removed CloudKit conversion code
+             - Build succeeded
+
+2026-04-15 - US-003 COMPLETE: Supabase fetch service
+             - Created SupabaseService with fetchAnnotations() async method
+             - Uses Supabase Swift SDK REST API (no WebSockets)
+             - Custom error type with user-friendly messages
+             - Build succeeded
+
+2026-04-15 - US-004 COMPLETE: Seed script for test data
+             - Inserted 7 test annotations into Supabase
+             - 3D cross pattern: Center, Left, Right, Up, Down, Close, Far
+             - Positions at 0.5m - 1.5m in front of camera (negative Z)
+
+2026-04-15 - US-005 COMPLETE: Minimal AR view with ARKit
+             - Created ARViewerView (UIViewRepresentable wrapping ARView)
+             - ARWorldTrackingConfiguration with no plane detection
+             - Session starts on appear, pauses on dismantle
+
+2026-04-15 - US-006 COMPLETE: Render spheres at positions
+             - Created ARViewModel with loadAnnotations() and renderAnnotations()
+             - Red UnlitMaterial spheres (0.05m radius) at annotation positions
+             - Entities anchored at world origin
+
+2026-04-15 - US-007 COMPLETE: Display text labels
+             - Added createTextEntity() method to ARViewModel
+             - White UnlitMaterial text (0.05 font size = 5cm tall)
+             - Positioned 8cm above sphere center
+
+2026-04-15 - US-008 COMPLETE: Manual refresh button
+             - ContentView with refresh button overlay
+             - Loading indicator during fetch
+             - Error message display
+
+2026-04-15 - US-009 COMPLETE: Simple app entry point
+             - App launches directly to AR view
+             - Auto-fetches annotations on appear
+             - Updated project.yml with Supabase package dependency
+
+================================================================================
+                         STATUS LEGEND
+================================================================================
+
+Progress Bars:
+  ░░░░░░░░░░  =  Not Started (0%)
+  ██░░░░░░░░  =  In Progress (20%)
+  ████░░░░░░  =  Halfway (40-50%)
+  ██████░░░░  =  Mostly Done (60%)
+  ████████░░  =  Almost Complete (80%)
+  ██████████  =  Complete (100%)
+
+Status Markers:
+  [ ]  =  Not Started
+  [~]  =  In Progress
+  [x]  =  Complete
+  [!]  =  Blocked
+
+Pipeline Status:
+  [ ] PENDING   =  Not yet implemented
+  [~] BUILDING  =  Currently working on
+  [x] READY     =  Implemented and tested
+  [!] BROKEN    =  Has issues needing fix
+
+================================================================================
+
+                    ╔═══════════════════════════════════════╗
+                    ║   Update this file as you progress!   ║
+                    ║                                       ║
+                    ║   1. Change [ ] to [x] when done      ║
+                    ║   2. Update progress bars             ║
+                    ║   3. Update pipeline status           ║
+                    ║   4. Add notes for blockers           ║
+                    ║   5. Log changes at bottom            ║
+                    ╚═══════════════════════════════════════╝
+
+================================================================================
